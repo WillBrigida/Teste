@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="AlarmApp.Pages.NewAlarmPage"
+			 xmlns:local="clr-namespace:AlarmApp.Controls"
+			 xmlns:converters="clr-namespace:AlarmApp.Converters"
+			 xmlns:views="clr-namespace:AlarmApp.Views"
+			 Title="New Alarm">
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Text="Save" Icon="save" Command="{Binding SaveAlarmCommand}"/>
+	</ContentPage.ToolbarItems>
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
+		</ResourceDictionary>
+	</ContentPage.Resources>
+	<ContentPage.Content>
+		<ScrollView>
+			<StackLayout Spacing="0">
+				<Entry Text="{Binding Alarm.Name}" Placeholder="Name" Margin="40, 0, 40, 20"/>
+				<Label Text="begins at" Style="{StaticResource LargeCenteredHeading}"/>
+				<TimePicker Time="{Binding Alarm.Time}" HorizontalOptions="Center"/>
+
+				<!-- Occur Every section -->
+				<BoxView HeightRequest="1" Grid.ColumnSpan="2" BackgroundColor="{StaticResource PageSeparatorColor}" Margin="0, 20, 0, 0"/>
+
+				<StackLayout Orientation="Horizontal">
+					<Label Text="Vibrate?"/>
+					<Switch IsToggled="{Binding Alarm.IsVibrateOn}" HorizontalOptions="EndAndExpand"/>
+				</StackLayout>
+
+				<local:MusicSelectionButton Text="{Binding AlarmTone.Name}" Command="{Binding GoToTonesCommand}"/>
+				
+				<Grid Padding="40, 20, 40, 30" BackgroundColor="#26000000">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="0.5*"/>
+						<RowDefinition Height="60"/>
+						<RowDefinition Height="0.5*"/>
+						<RowDefinition Height="60"/>
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="0.3*"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<Label Text="Repeat every" Grid.ColumnSpan="2" Style="{StaticResource LargeCenteredHeading}"/>
+					<local:CustomEntry Text="{Binding FrequencyNumber, Mode=OneWayToSource}" IsValid="{Binding IsFrequencyNumberValid}" Grid.Row="1" Keyboard="Numeric" Placeholder="15" FontSize="30"/>
+					<local:CustomPicker SelectedItem="{Binding FrequencyPeriod, Mode=OneWayToSource}" IsValid="{Binding IsFrequencyPeriodValid}" Grid.Row="1" Grid.Column="1" Title="Set Frequency" Hint="Minutes" FontSize="30">
+						<local:CustomPicker.Items>
+							<x:String>Minutes</x:String>
+							<x:String>Hours</x:String>
+						</local:CustomPicker.Items>
+					</local:CustomPicker>
+
+					<Label Text="For" Grid.Row="2" Grid.ColumnSpan="2" Style="{StaticResource LargeCenteredHeading}" Margin="0, 20, 0,0"/>
+					<local:CustomEntry Text="{Binding DurationNumber, Mode=OneWayToSource}" IsValid="{Binding IsDurationNumberValid}" Grid.Row="3" Keyboard="Numeric" Placeholder="2" FontSize="30"/>
+					<local:CustomPicker SelectedItem="{Binding DurationPeriod, Mode=OneWayToSource}" IsValid="{Binding IsDurationPeriodValid}" Grid.Row="3" Grid.Column="1" Title="Set Frequency" Hint="Hours" FontSize="30">
+						<local:CustomPicker.Items>
+							<x:String>Minutes</x:String>
+							<x:String>Hours</x:String>
+						</local:CustomPicker.Items>
+					</local:CustomPicker>
+					
+				</Grid>
+				<BoxView HeightRequest="1" Grid.Row="3" Grid.ColumnSpan="2" BackgroundColor="{StaticResource PageSeparatorColor}"  Margin="0, 0, 0, 20"/>
+				
+			<!--	<Label Text="Alarms end at" Style="{StaticResource LargeCenteredHeading}"/>
+				<TimePicker Time="{Binding Alarm.Time, Mode=OneWayToSource}" HorizontalOptions="Center"/>-->
+				
+				<Label Text="On these days" Style="{StaticResource LargeCenteredHeading}"/>
+				<!-- Day of the week selectors -->
+				<ScrollView Orientation="Horizontal">
+					<views:DaysOfWeekSelectionView Days="{Binding Alarm.Days}" HorizontalOptions="Center"/>
+				</ScrollView>
+				<Label Text="Please select a day on which the alarm should be set" IsVisible="{Binding HasDayBeenSelected, Converter={StaticResource InverseBoolConverter}}"/>
+			</StackLayout>
+		</ScrollView>
+	</ContentPage.Content>
+</ContentPage>

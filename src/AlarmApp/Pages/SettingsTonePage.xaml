@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+			 x:Class="AlarmApp.Pages.SettingsTonePage"
+			 xmlns:Helpers="AlarmApp.Helpers"
+			 Title="Select Tone"
+			 xmlns:cells="clr-namespace:AlarmApp.Views"
+			 xmlns:selectors="clr-namespace:AlarmApp.DataTemplateSelectors"
+			 BackgroundColor="{StaticResource DarkBackgroundColor}">
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<DataTemplate 
+				x:Key="DefaultTemplate">
+				<ViewCell>
+					<ViewCell.View>
+						<Label 
+							Text="{Binding Name}" 
+						    FontSize="17" 
+						    TextColor="{StaticResource TitleColor}" 
+						    Margin="20"/>
+					</ViewCell.View>
+				</ViewCell>
+			</DataTemplate>
+
+			<DataTemplate 
+				x:Key="CustomTemplate">
+				<ViewCell 
+					BindingContextChanged="ViewCellBindingContextChanged">
+					<ViewCell.ContextActions>
+						<MenuItem Text="Delete"
+								  Icon="delete"
+								  IsDestructive="true"
+								  Command="{Binding DeleteToneCommand}"/>
+					</ViewCell.ContextActions>
+					<ViewCell.View>
+						<StackLayout Padding="20"
+							Orientation="Horizontal">
+							<Label 
+							Text="{Binding Name}" 
+							FontSize="17" 
+							TextColor="{StaticResource TitleColor}" 
+							HorizontalOptions="StartAndExpand"
+							VerticalOptions="Center"/>
+							
+							<Button 
+							Text="&#xf044;"
+							FontFamily="fontawesome.ttf#FontAwesome"
+							TextColor="{StaticResource AccentColor}"
+							FontSize="Large"
+							BackgroundColor="{StaticResource DarkBackgroundColor}"
+							WidthRequest="40"
+							HeightRequest="40"
+							BorderRadius="40"
+							Command="{Binding Source={x:Reference ToneListView}, Path=BindingContext.EditToneCommand}"
+							CommandParameter="{Binding .}"
+							VerticalOptions="Center"/>
+						</StackLayout>
+					</ViewCell.View>
+				</ViewCell>
+			</DataTemplate>
+
+			<selectors:AlarmToneDatatemplateSelector 
+				x:Key="AlarmToneDataTemplateSelector"
+				DefaultTemplate="{StaticResource DefaultTemplate}"
+				CustomTemplate="{StaticResource CustomTemplate}"/>
+		</ResourceDictionary>
+	</ContentPage.Resources>
+	<ContentPage.Content>
+		<ListView x:Name="ToneListView" 
+				  ItemTemplate="{StaticResource AlarmToneDataTemplateSelector}"
+				  ItemsSource="{Binding AllAlarmTones, Mode=OneWay}" 
+				  SelectedItem="{Binding SelectedTone, Mode=TwoWay}" 
+				  HasUnevenRows="true">
+		</ListView>
+	</ContentPage.Content>
+</ContentPage>

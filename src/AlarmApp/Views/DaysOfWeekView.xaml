@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+			 x:Class="AlarmApp.Views.DaysOfWeekView"
+			 xmlns:controls="clr-namespace:AlarmApp.Controls">
+	<ContentView.Content>
+		<Label x:Name="DaysLabel" Style="{StaticResource AlarmExtrasHeading}"/>
+	<!--	<StackLayout Orientation="Horizontal">
+			<controls:CircleLabel x:Name="MondayLabel" Text="M" Style="{StaticResource DaysOfWeekLabelStyle}"/>
+			<controls:CircleLabel x:Name="TuesdayLabel" Text="T" Style="{StaticResource DaysOfWeekLabelStyle}"/>
+			<controls:CircleLabel x:Name="WednesdayLabel" Text="W" Style="{StaticResource DaysOfWeekLabelStyle}"/>
+			<controls:CircleLabel x:Name="ThursdayLabel" Text="T" Style="{StaticResource DaysOfWeekLabelStyle}"/>
+			<controls:CircleLabel x:Name="FridayLabel" Text="F" Style="{StaticResource DaysOfWeekLabelStyle}"/>
+			<controls:CircleLabel x:Name="SaturdayLabel" Text="S" Style="{StaticResource DaysOfWeekLabelStyle}"/>
+			<controls:CircleLabel x:Name="SundayLabel" Text="S" Style="{StaticResource DaysOfWeekLabelStyle}"/>
+		</StackLayout>-->
+	</ContentView.Content>
+</ContentView>
